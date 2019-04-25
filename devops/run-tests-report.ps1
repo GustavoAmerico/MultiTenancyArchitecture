@@ -1,0 +1,3 @@
+&dotnet test '..\src\MultiTenancySolution' --logger "trx;LogFileName=TestResults.trx" --logger  --results-directory ./bin/BuildReports/UnitTests  /p:CollectCoverage=true /p:CoverletOutput=bin\BuildReports\Coverage\ /p:CoverletOutputFormat=cobertura;
+ 
+&reportgenerator "-reports:..\src\MultiTenancySolution\Tests\MultiTenancy.Tests\bin\BuildReports\Coverage\coverage.cobertura.xml" "-targetdir:..\src\MultiTenancySolution\Tests\MultiTenancy.Tests\bin\BuildReports\html" "-reporttypes:HTML;HTMLSummary" "-assemblyfilters:-*.Tests";
