@@ -2,7 +2,9 @@
 
 namespace MultiTenancy
 {
-    /// <summary>This class represents a tenant abstraction of the system with custum configs and secrets</summary>
+    /// <summary>
+    /// This class represents a tenant abstraction of the system with custum configs and secrets
+    /// </summary>
     public interface ITenant<TKey> : IEquatable<ITenant<TKey>>
 
     {
@@ -10,7 +12,9 @@ namespace MultiTenancy
         TKey Id { get; }
     }
 
-    /// <summary>This class represents a tenant abstraction of the system with custum configs and secrets</summary>
+    /// <summary>
+    /// This class represents a tenant abstraction of the system with custum configs and secrets
+    /// </summary>
     /// <typeparam name="TKey">Type of the identifier</typeparam>
     public interface ITenant<TKey, TProperty, TSecret>
         : ITenantClaims<TKey, TProperty>
@@ -21,7 +25,7 @@ namespace MultiTenancy
         /// <summary>obtains a flag indicating whether the tenant is active or not</summary>
         bool IsEnabled { get; }
 
-        /// <summary>Gets the public display name from this tenant. </summary>
+        /// <summary>Gets the public display name from this tenant.</summary>
         string Name { get; }
     }
 }

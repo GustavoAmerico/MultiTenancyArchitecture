@@ -28,7 +28,7 @@ namespace MultiTenancy.Defaults
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public virtual bool Equals(ITenantClaims<TKey, TProperty> other)
         {
-            if (ReferenceEquals(null, other) || other.Id?.Equals(Id) != true)
+            if (other?.Id?.Equals(Id) != true)
                 return false;
 
             return other is ITenantClaims<TKey, TProperty>;
@@ -39,7 +39,7 @@ namespace MultiTenancy.Defaults
         /// <returns></returns>
         public virtual bool Equals(ITenant<TKey> other)
         {
-            if (ReferenceEquals(null, other) || other.Id?.Equals(Id) != true)
+            if (other?.Id?.Equals(Id) != true)
                 return false;
 
             var areEqualsType = other is ITenantClaims<TKey, TProperty>;

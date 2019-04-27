@@ -17,7 +17,7 @@ namespace MultiTenancy.Defaults
         /// <summary>obtains a flag indicating whether the tenant is active or not</summary>
         public virtual bool IsEnabled { get; protected set; } = true;
 
-        /// <summary>Gets the public display name from this tenant. </summary>
+        /// <summary>Gets the public display name from this tenant.</summary>
         public virtual string Name { get => _name; protected set => _name = (value ?? string.Empty).Trim(); }
 
         /// <summary>Gets secrets config for this thenant</summary>
@@ -25,7 +25,7 @@ namespace MultiTenancy.Defaults
 
         /// <summary>Initialize an object with default value based on <paramref name="tenant"/></summary>
         /// <param name="tenant">The tenant base for initialize properties values</param>
-        /// <exception cref="ArgumentNullException">Throw if <paramref name="tenant"/> is null. </exception>
+        /// <exception cref="ArgumentNullException">Throw if <paramref name="tenant"/> is null.</exception>
         public Tenant(ITenant<TKey> tenant)
         {
             if (ReferenceEquals(null, tenant) || ReferenceEquals(null, tenant.Id))

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace MultiTenancy.Defaults
 {
@@ -16,8 +15,6 @@ namespace MultiTenancy.Defaults
         {
             Secrets = ReferenceEquals(null, secrets) ? new TSecret() : secrets;
             Id = id;
-
-            var x = new TenantSecret<string, int>();
         }
 
         protected TenantSecret()

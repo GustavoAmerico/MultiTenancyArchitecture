@@ -1,5 +1,4 @@
 ﻿using MultiTenancy.Defaults;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +21,9 @@ namespace MultiTenancy
 
         /// <summary></summary>
         /// <param name="tenants"></param>
-        /// <exception cref="System.ArgumentNullException">Throw when <see cref="tenants"/> is null</exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Throw when <see cref="tenants"/> is null
+        /// </exception>
         public TenantCollection(IEnumerable<ITenant<TKey, TProperty, TSecret>> tenants)
             : base(new TenantEqualityComparer<TKey>())
         {

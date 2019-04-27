@@ -36,10 +36,16 @@ namespace MultiTenancy
             return false;
         }
 
-        /// <summary> hash function for the specified object for hashing algorithms and data structures, such as a hash table</summary>
+        /// <summary>
+        /// hash function for the specified object for hashing algorithms and data structures, such
+        /// as a hash table
+        /// </summary>
         public override int GetHashCode(ITenant<TKey, TProperty, TSecret> obj) => obj?.Id?.GetHashCode() ?? -1;
 
-        /// <summary> hash function for the specified object for hashing algorithms and data structures, such as a hash table</summary>
+        /// <summary>
+        /// hash function for the specified object for hashing algorithms and data structures, such
+        /// as a hash table
+        /// </summary>
         public int GetHashCode(ITenant<TKey> obj) => obj?.Id?.GetHashCode() ?? -1;
     }
 }
