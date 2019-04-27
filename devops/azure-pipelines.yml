@@ -57,7 +57,7 @@ steps:
   displayName: Run reportgeneator codecoverage
   inputs:
     script: | 
-      reportgenerator "-reports:$(Agent.TempDirectory)\coverage.cobertura.xml" "-targetdir:$(Agent.TempDirectory)\html" "-reporttypes:HtmlInline_AzurePipelines" "-assemblyfilters:-*.Tests"
+      reportgenerator "-reports:$(Agent.TempDirectory)\*.cobertura.xml" "-targetdir:$(Agent.TempDirectory)\html" "-reporttypes:HtmlInline_AzurePipelines" "-assemblyfilters:-*.Tests"
  
     
 - task: PublishCodeCoverageResults@1
