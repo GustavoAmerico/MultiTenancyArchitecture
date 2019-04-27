@@ -48,7 +48,7 @@ steps:
   displayName: Build solution
   inputs:
     command: test
-    arguments:  /p:CollectCoverage=true /p:CoverletOutput=$(Agent.TempDirectory) /p:CoverletOutputFormat=cobertura /p:Version=$(version)
+    arguments:  /p:CollectCoverage=true /p:CoverletOutput=$(Agent.TempDirectory)/coverage.cobertura.xml /p:CoverletOutputFormat=cobertura /p:Version=$(version)
     workingDirectory: 'src/MultiTenancySolution/'
     packDirectory: '$(Build.ArtifactStagingDirectory)'
     publishTestResults: true
@@ -57,7 +57,7 @@ steps:
   displayName: Run reportgeneator codecoverage
   inputs:
     script: | 
-      reportgenerator "-reports:$(Agent.TempDirectory)\*.cobertura.xml" "-targetdir:$(Agent.TempDirectory)\html" "-reporttypes:HtmlInline_AzurePipelines" "-assemblyfilters:-*.Tests"
+      reportgenerator "-reports:$(Agent.TempDirectory)/coverage.cobertura.xml" "-targetdir:$(Agent.TempDirectory)\html" "-reporttypes:HtmlInline_AzurePipelines" "-assemblyfilters:-*.Tests"
  
     
 - task: PublishCodeCoverageResults@1
