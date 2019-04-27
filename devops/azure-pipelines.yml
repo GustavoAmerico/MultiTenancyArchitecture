@@ -5,7 +5,7 @@ pr:
      - release
   paths:
     include:
-     - 'src/MultiTenancySolution/' 
+     - src/MultiTenancySolution
      - 'devops/azure-pipelines.yml'
     exclude:
       - 'src/MultiTenancySolution/CodeMaid.config'
@@ -16,7 +16,7 @@ trigger:
      - feature-
   paths:
     include:
-     - 'src/MultiTenancySolution/' 
+     - src/MultiTenancySolution 
      - 'devops/azure-pipelines.yml'
     exclude:
       - 'src/MultiTenancySolution/CodeMaid.config' 
@@ -27,9 +27,6 @@ variables:
   version: $(major).$(minor).$(Build.BuildId)
   solution: $(Build.SourcesDirectory)/src/BlueOpex
   buildConfiguration: Release
-  buildPlatform: 'linux-x64'
-  azureSubscriptionEndpoint: $(azureSubscriptionEndpoint_Production)
-  azureContainerRegistry: intcom.azurecr.io
 
 name: $(major).$(minor).$(Build.BuildId)
 
@@ -39,7 +36,7 @@ steps:
   displayName: "Install Dotnet CLI"
   inputs:
     packageType: sdk
-    version: 2.2
+    version: 2.2.105
 
 
 - task: DotNetCoreCLI@2
