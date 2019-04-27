@@ -38,12 +38,8 @@ steps:
     packageType: sdk
     version: 2.2.105
 
-
-- task: DotNetCoreCLI@2
-  displayName: Install dotnet-reportgenerator-globaltool
-  inputs:
-    command: custom
-    custom: tool install -g --ignore-failed-sources dotnet-reportgenerator-globaltool
+- script: | 
+    dotnet tool install -g --ignore-failed-sources dotnet-reportgenerator-globaltool
     
 - task: DotNetCoreCLI@2
   displayName: Build solution
