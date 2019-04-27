@@ -1,0 +1,74 @@
+pr:
+  branches:
+    include: 
+     - master
+     - release
+  paths:
+    include:
+     - 'src/MultiTenancySolution/' 
+     - 'devops/azure-pipelines.yml'
+    exclude:
+      - 'src/MultiTenancySolution/CodeMaid.config'
+
+trigger:
+  branches:
+    include:
+     - feature-
+  paths:
+    include:
+     - 'src/MultiTenancySolution/' 
+     - 'devops/azure-pipelines.yml'
+    exclude:
+      - 'src/MultiTenancySolution/CodeMaid.config' 
+
+variables:
+  major: 0
+  minor: 0
+  version: $(major).$(minor).$(Build.BuildId)
+  solution: $(Build.SourcesDirectory)/src/BlueOpex
+  buildConfiguration: Release
+  buildPlatform: 'linux-x64'
+  azureSubscriptionEndpoint: $(azureSubscriptionEndpoint_Production)
+  azureContainerRegistry: intcom.azurecr.io
+
+name: $(major).$(minor).$(Build.BuildId)
+
+steps:
+
+- task: DotNetCoreInstaller@0
+  displayName: "Install Dotnet CLI"
+  inputs:
+    packageType: sdk
+    version: 2.2
+
+
+- task: DotNetCoreCLI@2
+  displayName: Install dotnet-reportgenerator-globaltool
+  inputs:
+    command: custom
+    custom: tool install -g --ignore-failed-sources dotnet-reportgenerator-globaltool
+    
+- task: DotNetCoreCLI@2
+  displayName: Build solution
+  inputs:
+    command: test
+    arguments:  /p:CollectCoverage=true /p:CoverletOutput=$(Agent.TempDirectory) /p:CoverletOutputFormat=cobertura /p:Version=$(version)
+    workingDirectory: 'src/MultiTenancySolution/'
+    packDirectory: '$(Build.ArtifactStagingDirectory)'
+    publishTestResults: true
+
+- task: DotNetCoreCLI@2
+  displayName: Run dotnet-reportgenerator-globaltool
+  inputs:
+    command: custom
+    custom: reportgenerator "-reports:$(Agent.TempDirectory)\coverage.cobertura.xml" "-targetdir:$(Agent.TempDirectory)\html" "-reporttypes:HtmlInline_AzurePipelines" "-assemblyfilters:-*.Tests";
+    
+    
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    summaryFileLocation:  $(Agent.TempDirectory)/*.cobertura.xml
+    codeCoverageTool: Cobertura
+    reportDirectory:  $(Agent.TempDirectory)/html
+  enabled: true
+  condition: succeededOrFailed()
