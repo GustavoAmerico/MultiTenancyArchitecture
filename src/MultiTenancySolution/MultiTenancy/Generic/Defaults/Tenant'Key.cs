@@ -1,15 +1,15 @@
 ﻿namespace MultiTenancy.Defaults
 {
-    public abstract class TenantBasse<TKey> : ITenant<TKey>
+    public class Tenant<TKey> : ITenant<TKey>
     {
         /// <summary>Gets the public identifier from this tenant</summary>
         public TKey Id { get; protected set; }
 
-        public TenantBasse()
+        public Tenant()
         {
         }
 
-        public TenantBasse(TKey id)
+        public Tenant(TKey id)
         {
             Id = id;
         }

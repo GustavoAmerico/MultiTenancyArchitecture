@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MultiTenancy.Defaults
 {
     /// <summary>This class represents a system tenant instance</summary>
-    public class Tenant<TKey, TProperty, TSecret> : TenantBasse<TKey>, ITenant<TKey, TProperty, TSecret>
+    public class Tenant<TKey, TProperty, TSecret> : ITenant<TKey, TProperty, TSecret>
 
     {
         private string _name = "";
 
         /// <summary>Gets the list of configuration for this tenant</summary>
         public virtual TProperty Claims { get; set; }
+
+        public TKey Id { get; protected set; }
 
         /// <summary>obtains a flag indicating whether the tenant is active or not</summary>
         public virtual bool IsEnabled { get; protected set; } = true;
@@ -20,7 +23,10 @@ namespace MultiTenancy.Defaults
         /// <summary>Gets secrets config for this thenant</summary>
         public virtual TSecret Secrets { get; set; }
 
-        public Tenant(ITenant<TKey> tenant) : base(tenant.Id)
+        /// <summary>Initialize an object with default value based on <paramref name="tenant"/></summary>
+        /// <param name="tenant">The tenant base for initialize properties values</param>
+        /// <exception cref="ArgumentNullException">Throw if <paramref name="tenant"/> is null. </exception>
+        public Tenant(ITenant<TKey> tenant)
         {
             if (ReferenceEquals(null, tenant) || ReferenceEquals(null, tenant.Id))
                 throw new ArgumentNullException(nameof(tenant), "The tenant key must be fill");
@@ -29,28 +35,28 @@ namespace MultiTenancy.Defaults
             Merge(tenant);
         }
 
-        public Tenant(TKey id, string name, bool isEnabled = true) : base(id)
+        public Tenant(TKey id, string name, bool isEnabled = true)
         {
             Id = id;
             Name = name;
             IsEnabled = isEnabled;
         }
 
-        public Tenant(TKey id, string name, TProperty claims) : base(id)
+        public Tenant(TKey id, string name, TProperty claims)
         {
             Id = id;
             Name = name;
             Claims = claims;
         }
 
-        public Tenant(TKey id, string name, TSecret secret) : base(id)
+        public Tenant(TKey id, string name, TSecret secret)
         {
             Id = id;
             Name = name;
             Secrets = secret;
         }
 
-        public Tenant(TKey id, string name, TProperty claims, TSecret secret) : base(id)
+        public Tenant(TKey id, string name, TProperty claims, TSecret secret)
         {
             Id = id;
             Name = name;
@@ -78,7 +84,7 @@ namespace MultiTenancy.Defaults
         /// <summary>Indicates whether the current object is equal to another object.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public override bool Equals(ITenant<TKey> other)
+        public virtual bool Equals(ITenant<TKey> other)
         {
             if (ReferenceEquals(null, other) || other.Id?.Equals(Id) != true)
                 return false;
@@ -95,6 +101,7 @@ namespace MultiTenancy.Defaults
         }
 
         /// <summary>Gets the text description</summary>
+        [ExcludeFromCodeCoverage]
         public override string ToString()
         {
             return $"{Name} ({Id})";

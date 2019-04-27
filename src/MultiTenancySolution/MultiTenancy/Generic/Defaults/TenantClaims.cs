@@ -1,4 +1,6 @@
-﻿namespace MultiTenancy.Defaults
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace MultiTenancy.Defaults
 {
     public class TenantClaims<TKey, TProperty> : ITenantClaims<TKey, TProperty>
     {
@@ -51,6 +53,7 @@
             return Id?.GetHashCode() ?? -1;
         }
 
+        [ExcludeFromCodeCoverage]
         public override string ToString()
         {
             return $"{Id} - {Claims}";

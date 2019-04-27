@@ -1,6 +1,7 @@
 ﻿using MultiTenancy.Defaults;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MultiTenancy
 {
@@ -19,6 +20,10 @@ namespace MultiTenancy
         {
         }
 
+        public TenantDefault(TKey id, string name, Dictionary<string, object> claims, Dictionary<string, object> secret) : base(id, name, claims, secret)
+        {
+        }
+
         /// <summary>Indicates whether the current object is equal to another object.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
@@ -31,6 +36,7 @@ namespace MultiTenancy
         public override int GetHashCode() => Id.GetHashCode();
 
         /// <summary>Gets the text description</summary>
+        [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Name} ({Id})";
     }
 
@@ -45,6 +51,10 @@ namespace MultiTenancy
         }
 
         public TenantDefault(ITenant<Guid> tenant) : base(tenant)
+        {
+        }
+
+        public TenantDefault(Guid id, string name, Dictionary<string, object> claims, Dictionary<string, object> secret) : base(id, name, claims, secret)
         {
         }
     }

@@ -11,7 +11,9 @@ namespace MultiTenancy.Tests
     {
         private TenantClaims<Guid, Dictionary<string, object>> _claimsFirstTenant;
         private Guid _firstTenantId;
+        private Guid _secondTenantId;
         private TenantSecret<Guid, Dictionary<string, object>> _secretFirstTenant;
+        private TenantSecret<Guid, Dictionary<string, object>> _secretSecondTenant;
 
         /// <summary>Determina se dois tenant são iguais com base na classe <see cref="TenantEqualityComparer{TKey}"/></summary>
         [TestMethod]
@@ -60,6 +62,15 @@ namespace MultiTenancy.Tests
         }
 
         [TestMethod]
+        public void CheckIfTenantSecretAndTenantClaimsAreNotEquals_ExpectedTenantEqualityComparerResultTrue()
+        {
+            var comparer = new TenantEqualityComparer<Guid, Dictionary<string, object>, Dictionary<string, object>>();
+            var tenant = new TenantDefault(_secretFirstTenant);
+
+            Assert.IsFalse(comparer.Equals(tenant, _secretSecondTenant));
+        }
+
+        [TestMethod]
         public void CheckIfTenantSecretWithDistinctTypeAreEquals()
         {
             var defaultId = 19;
@@ -72,15 +83,15 @@ namespace MultiTenancy.Tests
         public void Initialize()
         {
             _firstTenantId = Guid.NewGuid();
-            //     _secondTenantId = Guid.NewGuid();
+            _secondTenantId = Guid.NewGuid();
             var dicSecretFirst = new Dictionary<string, object>() { { "Secret1", "Value 1" } };
             var dicClaimsFirst = new Dictionary<string, object>() { { "Claims1", "Value 1" } };
 
             _secretFirstTenant = new TenantSecret<Guid, Dictionary<string, object>>(_firstTenantId, secrets: dicSecretFirst);
             _claimsFirstTenant = new TenantClaims<Guid, Dictionary<string, object>>(_firstTenantId, claims: dicClaimsFirst);
 
-            // var dicSecretSecond = new Dictionary<string, object>() { { "Secret2", "Value 2" } };
-            //         _secretSecondTenant = new TenantSecret<Guid, Dictionary<string, object>>(_secondTenantId, secrets: dicSecretSecond);
+            var dicSecretSecond = new Dictionary<string, object>() { { "Secret2", "Value 2" } };
+            _secretSecondTenant = new TenantSecret<Guid, Dictionary<string, object>>(_secondTenantId, secrets: dicSecretSecond);
         }
 
         [TestMethod]

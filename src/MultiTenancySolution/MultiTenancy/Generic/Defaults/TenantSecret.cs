@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MultiTenancy.Defaults
 {
@@ -57,6 +58,7 @@ namespace MultiTenancy.Defaults
             return Id?.GetHashCode() ?? -1;
         }
 
+        [ExcludeFromCodeCoverage]
         public override string ToString()
         {
             return $"{Id} - {Secrets}";
