@@ -10,6 +10,6 @@ namespace MultiTenancy.Providers
         /// <typeparam name="TKey">This is the client identifier</typeparam>
         /// <typeparam name="TProperty">This is the type of custom claims</typeparam>
         /// <param name="service">Dechanism for retrieving a service object</param>
-        HashSet<ITenantClaims<TKey, TProperty>> GetTenantClaims<TKey, TProperty>(IServiceProvider service);
+        HashSet<ITenantClaims<TKey, TProperty>> GetTenantClaims<TKey, TProperty>();
     }
 }

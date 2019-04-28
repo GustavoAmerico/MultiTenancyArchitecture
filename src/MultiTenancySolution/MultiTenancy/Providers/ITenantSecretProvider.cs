@@ -10,6 +10,6 @@ namespace MultiTenancy.Providers
         /// <typeparam name="TKey">This is the client identifier</typeparam>
         /// <typeparam name="TSecret">This is the type of custom secret</typeparam>
         /// <param name="service">Dechanism for retrieving a service object</param>
-        HashSet<ITenantSecrets<TKey, TSecret>> GetTenantSecrets<TKey, TSecret>(IServiceProvider service);
+        HashSet<ITenantSecrets<TKey, TSecret>> GetTenantSecrets<TKey, TSecret>();
     }
 }

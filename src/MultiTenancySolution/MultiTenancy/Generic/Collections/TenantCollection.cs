@@ -1,4 +1,5 @@
 ﻿using MultiTenancy.Defaults;
+using MultiTenancy.Providers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,14 +7,10 @@ namespace MultiTenancy
 {
     /// <summary>Represents the list of clients associated with the application</summary>
     /// <typeparam name="TKey">The identifier key for tenant</typeparam>
-    public class TenantCollection<TKey, TProperty, TSecret>
-        : HashSet<ITenant<TKey, TProperty, TSecret>>
-        , ITenantCollection<TKey, TProperty, TSecret>
-        , ICollection<ITenant<TKey, TProperty, TSecret>>
-
-        where TSecret : new()
-        where TProperty : new()
-
+    public class TenantCollection<TKey, TClaims, TSecret>
+        : HashSet<ITenant<TKey, TClaims, TSecret>>
+        , ITenantCollection<TKey, TClaims, TSecret>
+        , ICollection<ITenant<TKey, TClaims, TSecret>>
     {
         public TenantCollection() : base(new TenantEqualityComparer<TKey>())
         {
@@ -24,7 +21,7 @@ namespace MultiTenancy
         /// <exception cref="System.ArgumentNullException">
         /// Throw when <see cref="tenants"/> is null
         /// </exception>
-        public TenantCollection(IEnumerable<ITenant<TKey, TProperty, TSecret>> tenants)
+        public TenantCollection(IEnumerable<ITenant<TKey, TClaims, TSecret>> tenants)
             : base(new TenantEqualityComparer<TKey>())
         {
             if (ReferenceEquals(null, tenants))
@@ -44,19 +41,34 @@ namespace MultiTenancy
                 AddIfNotExists(item);
         }
 
-        public new bool Add(ITenant<TKey, TProperty, TSecret> item)
+        public TenantCollection(IEnumerable<ITenantClaimsProvider> claims, IEnumerable<ITenantProvider> tenants
+            , IEnumerable<ITenantSecretProvider> secrets)
+        {
+            Add(tenants.ToItens<TKey, TClaims, TSecret>());
+            Add(claims.ToItens<TKey, TClaims>());
+            Add(secrets.ToItens<TKey, TSecret>());
+        }
+
+        public void Add(IEnumerable<ITenant<TKey, TClaims, TSecret>> tenantClaims)
+        {
+            if (ReferenceEquals(null, tenantClaims)) return;
+            foreach (var claim in tenantClaims)
+                Add(claim);
+        }
+
+        public new bool Add(ITenant<TKey, TClaims, TSecret> item)
         {
             if (ReferenceEquals(null, item)) return false;
             return AddIfNotExists(item);
         }
 
-        public void Add(ITenantClaims<TKey, TProperty> tenantClaims)
+        public void Add(ITenantClaims<TKey, TClaims> tenantClaims)
         {
             if (ReferenceEquals(null, tenantClaims)) return;
             AddIfNotExists(tenantClaims);
         }
 
-        public void Add(params ITenantClaims<TKey, TProperty>[] tenantClaims)
+        public void Add(IEnumerable<ITenantClaims<TKey, TClaims>> tenantClaims)
         {
             if (ReferenceEquals(null, tenantClaims)) return;
             foreach (var claim in tenantClaims)
@@ -69,16 +81,16 @@ namespace MultiTenancy
             AddIfNotExists(tenantSecret);
         }
 
-        public void Add(params ITenantSecrets<TKey, TSecret>[] claims)
+        public void Add(IEnumerable<ITenantSecrets<TKey, TSecret>> claims)
         {
             if (ReferenceEquals(null, claims)) return;
             foreach (var secret in claims)
                 Add(secret);
         }
 
-        public ITenant<TKey, TProperty, TSecret> FirstOrDefault(TKey id)
+        public ITenant<TKey, TClaims, TSecret> FirstOrDefault(TKey id)
         {
-            var tenant = this.FirstOrDefault(f => f.Id.Equals(id)) as ITenant<TKey, TProperty, TSecret>;
+            var tenant = this.FirstOrDefault(f => f.Id.Equals(id)) as ITenant<TKey, TClaims, TSecret>;
             return tenant;
         }
 
@@ -93,15 +105,15 @@ namespace MultiTenancy
             var tenant = this.FirstOrDefault(newTenantSecret.Id);
             if (ReferenceEquals(null, tenant))
             {
-                tenant = (newTenantSecret is ITenant<TKey, TProperty, TSecret> tenantconvert)
+                tenant = (newTenantSecret is ITenant<TKey, TClaims, TSecret> tenantconvert)
                     ? tenantconvert
-                    : new Tenant<TKey, TProperty, TSecret>(newTenantSecret);
+                    : new Tenant<TKey, TClaims, TSecret>(newTenantSecret);
 
                 base.Add(tenant);
                 return true;
             }
 
-            if (newTenantSecret is ITenantClaims<TKey, TProperty> tenantClaims)
+            if (newTenantSecret is ITenantClaims<TKey, TClaims> tenantClaims)
                 tenant.Claims = tenantClaims.Claims;
 
             if (newTenantSecret is ITenantSecrets<TKey, TSecret> tenantSecret)

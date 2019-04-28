@@ -11,6 +11,6 @@ namespace MultiTenancy.Providers
         /// <typeparam name="TProperty">This is the type of custom claims</typeparam>
         /// <typeparam name="TSecret">This is the type of custom secrets</typeparam>
         /// <param name="service">Dechanism for retrieving a service object</param>
-        HashSet<ITenant<TKey, TProperty, TSecret>> GetTenants<TKey, TProperty, TSecret>(IServiceProvider service);
+        HashSet<ITenant<TKey, TProperty, TSecret>> GetTenants<TKey, TProperty, TSecret>();
     }
 }
