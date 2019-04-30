@@ -21,32 +21,23 @@ namespace MultiTenancy
         /// <exception cref="System.ArgumentNullException">
         /// Throw when <see cref="tenants"/> is null
         /// </exception>
-        public TenantCollection(IEnumerable<ITenant<TKey, TClaims, TSecret>> tenants)
-            : base(new TenantEqualityComparer<TKey>())
-        {
-            if (ReferenceEquals(null, tenants))
-                throw new System.ArgumentNullException(nameof(tenants));
-
-            foreach (var item in tenants)
-                AddIfNotExists(item);
-        }
-
-        public TenantCollection(IEnumerable<ITenant<TKey>> tenants)
-            : base(new TenantEqualityComparer<TKey>())
-        {
-            if (ReferenceEquals(null, tenants))
-                throw new System.ArgumentNullException(nameof(tenants));
-
-            foreach (var item in tenants)
-                AddIfNotExists(item);
-        }
-
-        public TenantCollection(IEnumerable<ITenantClaimsProvider> claims, IEnumerable<ITenantProvider> tenants
-            , IEnumerable<ITenantSecretProvider> secrets)
+        public TenantCollection(IEnumerable<ITenantClaimsProvider> claims
+            , IEnumerable<ITenantProvider> tenants
+            , IEnumerable<ITenantSecretProvider> secrets) : base(new TenantEqualityComparer<TKey>())
         {
             Add(tenants.ToItens<TKey, TClaims, TSecret>());
             Add(claims.ToItens<TKey, TClaims>());
             Add(secrets.ToItens<TKey, TSecret>());
+        }
+
+        public void Add(IEnumerable<ITenant<TKey>> tenants)
+
+        {
+            if (ReferenceEquals(null, tenants))
+                throw new System.ArgumentNullException(nameof(tenants));
+
+            foreach (var item in tenants)
+                AddIfNotExists(item);
         }
 
         public void Add(IEnumerable<ITenant<TKey, TClaims, TSecret>> tenantClaims)
@@ -88,6 +79,9 @@ namespace MultiTenancy
                 Add(secret);
         }
 
+        /// <summary>Obtém o tenant com o identificador especificado na consulta</summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ITenant<TKey, TClaims, TSecret> FirstOrDefault(TKey id)
         {
             var tenant = this.FirstOrDefault(f => f.Id.Equals(id)) as ITenant<TKey, TClaims, TSecret>;

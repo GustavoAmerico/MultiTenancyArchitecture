@@ -30,7 +30,9 @@ namespace MultiTenancy.Tests
             Assert.AreEqual(tenant.Count, 1, "A clase permitiu adicionar duas instancias iguais");
         }
 
-        /// <summary>Esse metodo testa a adições de novos tenants na lista padrão de tenant com ID do tipo GUID</summary>
+        /// <summary>
+        /// Esse metodo testa a adições de novos tenants na lista padrão de tenant com ID do tipo GUID
+        /// </summary>
         [TestMethod]
         public void AddNewTenants()
         {
@@ -64,7 +66,10 @@ namespace MultiTenancy.Tests
             //tenantSecret.
         }
 
-        /// <summary>Esse metodo vai testar a ação de adicionar um tenant e depois mesclar com um claims carregado de outro provider</summary>
+        /// <summary>
+        /// Esse metodo vai testar a ação de adicionar um tenant e depois mesclar com um claims
+        /// carregado de outro provider
+        /// </summary>
         [TestMethod]
         public void AddTenantAndMergeTenantClaims()
         {
@@ -80,7 +85,10 @@ namespace MultiTenancy.Tests
             Assert.IsTrue(tenantk.Claims.ContainsKey("Claims1"));
         }
 
-        /// <summary>Esse metodo vai testar a ação de adicionar um tenant e depois mesclar com um claims carregado de outro provider</summary>
+        /// <summary>
+        /// Esse metodo vai testar a ação de adicionar um tenant e depois mesclar com um claims
+        /// carregado de outro provider
+        /// </summary>
         [TestMethod]
         public void AddTenantAndMergeTenantClaimsAndSecret()
         {
@@ -95,7 +103,10 @@ namespace MultiTenancy.Tests
             Assert.AreEqual(tenant.Count, 1);
         }
 
-        /// <summary>Esse metodo vai testar a ação de adicionar um tenant e depois mesclar com um secret carregado de outro provider</summary>
+        /// <summary>
+        /// Esse metodo vai testar a ação de adicionar um tenant e depois mesclar com um secret
+        /// carregado de outro provider
+        /// </summary>
         [TestMethod]
         public void AddTenantAndMergeTenantSecret()
         {
@@ -122,7 +133,9 @@ namespace MultiTenancy.Tests
             _secretSecondTenant = new TenantSecret<Guid, Dictionary<string, object>>(_secondTenantId, secrets: dicSecretSecond);
         }
 
-        /// <summary>Esse metodo verifica se a instancia de tenant é atualizada após ser mesclada com TenantSecret</summary>
+        /// <summary>
+        /// Esse metodo verifica se a instancia de tenant é atualizada após ser mesclada com TenantSecret
+        /// </summary>
         [TestMethod]
         public void MergeTenantWithSecretAndCheckAllInstancies_ExpectedAllInstanceRelated()
         {
@@ -131,11 +144,16 @@ namespace MultiTenancy.Tests
             var tenant2 = new TenantDefault(id, "Tenant 1 - One");
             var tenant3 = new TenantDefault(_secretSecondTenant.Id, "Tenant 3");
 
-            var collection2 = new TenantCollection(
+            var collection2 = new TenantCollection();
+            var itens =
                 new ITenant<Guid>[] {
                 tenant1,
                     tenant2,
-                    tenant3, _secretSecondTenant, _secretFirstTenant });
+                    tenant3,
+                    _secretSecondTenant,
+                    _secretFirstTenant };
+
+            collection2.Add(itens);
 
             Assert.IsTrue(tenant3.Secrets?.Equals(_secretSecondTenant.Secrets) == true);
 
@@ -159,11 +177,12 @@ namespace MultiTenancy.Tests
 
             var collection = new TenantCollection(new[] { tenant1, tenant2, tenant3 });
             Assert.AreEqual(2, collection.Count);
-
-            var collection2 = new TenantCollection(new ITenant<Guid>[] { tenant1, tenant2, tenant3, tenantClaims, _secretFirstTenant, tenantSecret2, null });
+            var itens = new ITenant<Guid>[] { tenant1, tenant2, tenant3, tenantClaims, _secretFirstTenant, tenantSecret2, null };
+            var collection2 = new TenantCollection();
+            collection2.Add(itens);
             Assert.AreEqual(3, collection2.Count);
 
-            Assert.ThrowsException<ArgumentNullException>(() => new TenantCollection((IEnumerable<ITenant<Guid>>)null));
+            Assert.ThrowsException<ArgumentNullException>(() => collection2.Add((IEnumerable<ITenant<Guid>>)null));
         }
     }
 }

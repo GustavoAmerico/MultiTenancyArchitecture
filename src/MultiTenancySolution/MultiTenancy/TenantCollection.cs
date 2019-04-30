@@ -9,17 +9,14 @@ namespace MultiTenancy
     {
         int IReadOnlyCollection<ITenant>.Count => throw new NotImplementedException();
 
-        public TenantCollection()
+        public TenantCollection() : base()
         {
         }
 
         public TenantCollection(IEnumerable<ITenant<Guid, Dictionary<string, object>, Dictionary<string, object>>> tenants)
-            : base(tenants)
+    : base()
         {
-        }
-
-        public TenantCollection(IEnumerable<ITenant<Guid>> tenants) : base(tenants)
-        {
+            Add(tenants);
         }
 
         IEnumerator<ITenant> IEnumerable<ITenant>.GetEnumerator()

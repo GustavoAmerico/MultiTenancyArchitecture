@@ -37,5 +37,54 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Add(desc);
             return services;
         }
+
+        public static IServiceCollection AddTenantProvider(this IServiceCollection services
+            , Func<IServiceProvider, MultiTenancy.Providers.ITenantProvider> createInstance
+            , ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+        {
+            services.Add(new ServiceDescriptor(
+                typeof(MultiTenancy.Providers.ITenantProvider)
+                , (provider) => createInstance(provider)
+                , serviceLifetime));
+            return services;
+        }
+
+        public static IServiceCollection AddTenantProvider(this IServiceCollection services
+            , Func<IServiceProvider, MultiTenancy.Providers.ITenantClaimsProvider> createInstance
+            , ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+
+        {
+            services.Add(new ServiceDescriptor(
+                typeof(MultiTenancy.Providers.ITenantClaimsProvider)
+                , (provider) => createInstance(provider)
+                , serviceLifetime));
+            return services;
+        }
+
+        public static IServiceCollection AddTenantProvider(this IServiceCollection services
+            , Func<IServiceProvider, MultiTenancy.Providers.ITenantSecretProvider> createInstance
+            , ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+
+        {
+            services.Add(new ServiceDescriptor(
+                typeof(MultiTenancy.Providers.ITenantSecretProvider)
+                , (provider) => createInstance(provider)
+                , serviceLifetime));
+            return services;
+        }
+
+        public static IServiceCollection AddTenants<TProvider>(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+            where TProvider : MultiTenancy.Providers.ITenantProvider
+        {
+            services.Add(new ServiceDescriptor(typeof(MultiTenancy.Providers.ITenantProvider), typeof(TProvider), serviceLifetime));
+            return services;
+        }
+
+        public static IServiceCollection AddTenantSecrets<TProvider>(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+            where TProvider : MultiTenancy.Providers.ITenantSecretProvider
+        {
+            services.Add(new ServiceDescriptor(typeof(MultiTenancy.Providers.ITenantSecretProvider), typeof(TProvider), serviceLifetime));
+            return services;
+        }
     }
 }
