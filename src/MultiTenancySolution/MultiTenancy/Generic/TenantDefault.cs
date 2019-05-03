@@ -1,9 +1,9 @@
-﻿using MultiTenancy.Defaults;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using MultiTenancy.Generic.Defaults;
 
-namespace MultiTenancy
+namespace MultiTenancy.Generic
 {
     /// <summary>This class represents a system tenant instance</summary>
     public class TenantDefault<TKey> : Tenant<TKey, Dictionary<string, object>, Dictionary<string, object>>
@@ -16,7 +16,7 @@ namespace MultiTenancy
         {
         }
 
-        public TenantDefault(ITenant<TKey> tenant) : base(tenant)
+        public TenantDefault(ITenantItem<TKey> tenant) : base(tenant)
         {
         }
 
@@ -30,7 +30,7 @@ namespace MultiTenancy
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(obj, null)) return false;
-            return base.Equals(obj as ITenant<Guid>);
+            return base.Equals(obj as ITenantItem<Guid>);
         }
 
         public override int GetHashCode() => Id.GetHashCode();
@@ -50,7 +50,7 @@ namespace MultiTenancy
         {
         }
 
-        public TenantDefault(ITenant<Guid> tenant) : base(tenant)
+        public TenantDefault(ITenantItem<Guid> tenant) : base(tenant)
         {
         }
 

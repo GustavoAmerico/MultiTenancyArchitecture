@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="MultiTenancy.ITenant&lt;TKey, TProperty, TSecret&gt;" Collapsed="true">
+    <Position X="3.25" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generic\ITenant.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.ITenantClaims&lt;TKey, TProperty&gt;" Collapsed="true">
+    <Position X="4" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generic\ITenantClaims.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.ITenantSecrets&lt;TKey, TSecret&gt;" Collapsed="true">
+    <Position X="0.75" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generic\ITenantSecrets.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.ITenant" Collapsed="true">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ITenant.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.ITenantCollection">
+    <Position X="12.75" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Collections\ITenantCollection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.ITenantItem&lt;TKey&gt;" Collapsed="true">
+    <Position X="3.75" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generic\ITenantItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.Providers.ITenantProvider">
+    <Position X="9.25" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Providers\ITenantProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

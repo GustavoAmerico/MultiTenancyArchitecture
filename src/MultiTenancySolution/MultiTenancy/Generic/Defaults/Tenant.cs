@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MultiTenancy.Defaults
+namespace MultiTenancy.Generic.Defaults
 {
     /// <summary>This class represents a system tenant instance</summary>
-    public class Tenant<TKey, TProperty, TSecret> : ITenant<TKey, TProperty, TSecret>
+    public class Tenant<TKey, TProperty, TSecret> : Tenant<TKey>, ITenant<TKey, TProperty, TSecret>
 
     {
         private string _name = "";
@@ -12,21 +12,13 @@ namespace MultiTenancy.Defaults
         /// <summary>Gets the list of configuration for this tenant</summary>
         public virtual TProperty Claims { get; set; }
 
-        public TKey Id { get; protected set; }
-
-        /// <summary>obtains a flag indicating whether the tenant is active or not</summary>
-        public virtual bool IsEnabled { get; protected set; } = true;
-
-        /// <summary>Gets the public display name from this tenant.</summary>
-        public virtual string Name { get => _name; protected set => _name = (value ?? string.Empty).Trim(); }
-
         /// <summary>Gets secrets config for this thenant</summary>
         public virtual TSecret Secrets { get; set; }
 
         /// <summary>Initialize an object with default value based on <paramref name="tenant"/></summary>
         /// <param name="tenant">The tenant base for initialize properties values</param>
         /// <exception cref="ArgumentNullException">Throw if <paramref name="tenant"/> is null.</exception>
-        public Tenant(ITenant<TKey> tenant)
+        public Tenant(ITenantItem<TKey> tenant)
         {
             if (ReferenceEquals(null, tenant) || ReferenceEquals(null, tenant.Id))
                 throw new ArgumentNullException(nameof(tenant), "The tenant key must be fill");
@@ -35,31 +27,22 @@ namespace MultiTenancy.Defaults
             Merge(tenant);
         }
 
-        public Tenant(TKey id, string name, bool isEnabled = true)
+        public Tenant(TKey id, string name, bool isEnabled = true) : base(id, name, isEnabled)
         {
-            Id = id;
-            Name = name;
-            IsEnabled = isEnabled;
         }
 
-        public Tenant(TKey id, string name, TProperty claims)
+        public Tenant(TKey id, string name, TProperty claims) : this(id, name)
         {
-            Id = id;
-            Name = name;
             Claims = claims;
         }
 
-        public Tenant(TKey id, string name, TSecret secret)
+        public Tenant(TKey id, string name, TSecret secret) : this(id, name)
         {
-            Id = id;
-            Name = name;
             Secrets = secret;
         }
 
-        public Tenant(TKey id, string name, TProperty claims, TSecret secret)
+        public Tenant(TKey id, string name, TProperty claims, TSecret secret) : this(id, name)
         {
-            Id = id;
-            Name = name;
             Claims = claims;
             Secrets = secret;
         }
@@ -79,12 +62,12 @@ namespace MultiTenancy.Defaults
         /// <summary>Indicates whether the current object is equal to another object.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public override bool Equals(object obj) => Equals(obj as ITenant<TKey>);
+        public override bool Equals(object obj) => Equals(obj as ITenantItem<TKey>);
 
         /// <summary>Indicates whether the current object is equal to another object.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public virtual bool Equals(ITenant<TKey> other)
+        public virtual bool Equals(ITenantItem<TKey> other)
         {
             if (ReferenceEquals(null, other) || other.Id?.Equals(Id) != true)
                 return false;
@@ -107,7 +90,7 @@ namespace MultiTenancy.Defaults
             return $"{Name} ({Id})";
         }
 
-        protected virtual void Merge(ITenant<TKey> tenant)
+        protected virtual void Merge(ITenantItem<TKey> tenant)
         {
             if (tenant is ITenant<TKey, TProperty, TSecret> full)
             {

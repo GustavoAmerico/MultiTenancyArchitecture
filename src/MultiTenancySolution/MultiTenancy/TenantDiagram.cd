@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="MultiTenancy.TenantEqualityComparer&lt;TKey&gt;" Collapsed="true">
-    <Position X="18.5" Y="1.5" Width="1.5" />
+  <Class Name="MultiTenancy.TenantEqualityComparer" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\TenantEqualityComparer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MultiTenancy.TenantEqualityComparer&lt;TKey, TProperty, TSecret&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="20.25" Y="1.5" Width="1.5" />
+    <Position X="13" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\TenantEqualityComparer`t.cs</FileName>
@@ -16,15 +16,15 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MultiTenancy.Defaults.Tenant&lt;TKey, TProperty, TSecret&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7" Y="3.5" Width="2.5" />
+    <Position X="0.5" Y="5.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAACIAAAAAAAAAEEgAEAAAQAAAAAAYAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAEEgAAAAAAAAAAAAYAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\Defaults\Tenant.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MultiTenancy.Defaults.TenantClaims&lt;TKey, TProperty&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="22" Y="0.5" Width="1.5" />
+    <Position X="13" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACIAAAAAAAAAAEgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\Defaults\TenantClaims.cs</FileName>
@@ -32,38 +32,30 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MultiTenancy.Defaults.Tenant&lt;TKey&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.5" Y="0.5" Width="1.5" />
+    <Position X="1" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACIAAAAAAAAAAEgAEAAAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\Defaults\Tenant'Key.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MultiTenancy.Defaults.TenantSecret&lt;TKey, TSecret&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="22" Y="1.5" Width="1.5" />
+    <Position X="14.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAEEgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\Defaults\TenantSecret.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="MultiTenancy.TenantCollection&lt;TKey, TClaims, TSecret&gt;">
-    <Position X="10.25" Y="8" Width="4.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAACGIAAAAAAAEAAAAAAAAAAAAgAAAAAAAAAAgAAA=</HashCode>
-      <FileName>Generic\Collections\TenantCollection.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="MultiTenancy.TenantDefault&lt;TKey&gt;" Collapsed="true">
-    <Position X="6.25" Y="4.75" Width="4" />
+    <Position X="3" Y="8.25" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>TenantDefault.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MultiTenancy.TenantDefault" Collapsed="true">
-    <Position X="7.5" Y="6.25" Width="1.5" />
+    <Position X="4.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TenantDefault.cs</FileName>
@@ -71,75 +63,59 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="MultiTenancy.ITenant&lt;TKey&gt;" Collapsed="true">
-    <Position X="10.5" Y="0.5" Width="2" />
+    <Position X="5.25" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\ITenant.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MultiTenancy.ITenant&lt;TKey, TProperty, TSecret&gt;" Collapsed="true">
-    <Position X="11.5" Y="3.5" Width="2.75" />
-    <InheritanceLine Type="MultiTenancy.ITenant" FixedFromPoint="true">
-      <Path>
-        <Point X="14.25" Y="2.25" />
-        <Point X="14.01" Y="2.25" />
-        <Point X="14.01" Y="3.26" />
-        <Point X="12.875" Y="3.26" />
-        <Point X="12.875" Y="3.5" />
-      </Path>
-    </InheritanceLine>
+    <Position X="5" Y="5.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\ITenant.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MultiTenancy.ITenantClaims&lt;TKey, TProperty&gt;" Collapsed="true">
-    <Position X="8.25" Y="2" Width="2.5" />
+    <Position X="3.25" Y="3.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\ITenantClaims.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MultiTenancy.ITenantSecrets&lt;TKey, TSecret&gt;" Collapsed="true">
-    <Position X="11.25" Y="2" Width="2.5" />
+    <Position X="6.5" Y="3.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\ITenantSecrets.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="MultiTenancy.Providers.ITenantClaimsProvider">
-    <Position X="17.75" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Providers\ITenantClaimsProvider.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="MultiTenancy.Providers.ITenantProvider" Collapsed="true">
-    <Position X="20.25" Y="2.75" Width="1.5" />
+    <Position X="14.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Providers\ITenantProvider.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="MultiTenancy.Providers.ITenantSecretProvider" Collapsed="true">
-    <Position X="22" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
-      <FileName>Providers\ITenantSecretProvider.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="MultiTenancy.ITenant" Collapsed="true">
-    <Position X="14.25" Y="2" Width="1.5" />
+    <Position X="10.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ITenant.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="MultiTenancy.ITenantCollection&lt;TKey, TProperty, TSecret&gt;">
-    <Position X="3" Y="8.25" Width="4.5" />
+  <Interface Name="MultiTenancy.ITenantCollection&lt;TKey, TClaims, TSecret&gt;" Collapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\Collections\ITenantCollection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MultiTenancy.ITenantItem" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ITenantItem.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

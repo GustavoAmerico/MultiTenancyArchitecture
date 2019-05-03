@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MultiTenancy.Defaults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MultiTenancy.Generic;
+using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Tests
 {
@@ -15,7 +16,7 @@ namespace MultiTenancy.Tests
         private TenantSecret<Guid, Dictionary<string, object>> _secretFirstTenant;
         private TenantSecret<Guid, Dictionary<string, object>> _secretSecondTenant;
 
-        /// <summary>Determina se dois tenant são iguais com base na classe <see cref="TenantEqualityComparer{TKey}"/></summary>
+        /// <summary>Determina se dois tenant são iguais com base na classe <see cref="TenantEqualityComparer"/></summary>
         [TestMethod]
         public void AreEquals()
         {
@@ -23,10 +24,11 @@ namespace MultiTenancy.Tests
             var tenant2 = new Tenant<int, string, DateTime>(1, "Tenant 2") { Secrets = DateTime.Now, Claims = "Claims 01" };
             var tenant3 = new Tenant<int, DateTime, string>(1, "Tenant 3") { Claims = DateTime.Now, Secrets = "Secrets 01" };
 
-            var list = new ITenant<int>[] { tenant1, tenant2, tenant3 }.ToHashSet(new TenantEqualityComparer<int>());
+            var list = new ITenantItem<int>[] { tenant1, tenant2, tenant3 }.ToHashSet(new TenantEqualityComparer());
             Assert.AreEqual(1, list.Count);
 
-            var list2 = new ITenant<int>[] { tenant1, tenant2, tenant3 }.ToHashSet(new TenantEqualityComparer<int, string, DateTime>());
+            var comparer = new TenantEqualityComparer<int, string, DateTime>();
+            var list2 = new ITenantItem<int>[] { tenant1, tenant2, tenant3 }.ToHashSet(comparer);
             Assert.AreEqual(3, list2.Count);
         }
 
@@ -39,7 +41,10 @@ namespace MultiTenancy.Tests
             Assert.IsFalse(tenantSecret1.Equals(tenantSecret3), "O secret de outro tipo não deve ser considerado iguais mesmo que tenha o mesmo id");
         }
 
-        /// <summary>Esse metodo verifica se um tenant secret e um tenant claims com mesmo ID são iguais pela logica do TenantEqualityComparer </summary>
+        /// <summary>
+        /// Esse metodo verifica se um tenant secret e um tenant claims com mesmo ID são iguais pela
+        /// logica do TenantEqualityComparer
+        /// </summary>
         [TestMethod]
         public void CheckIfTenantSecretAndTenantClaimsAreEquals()
         {
@@ -50,7 +55,10 @@ namespace MultiTenancy.Tests
             Assert.IsTrue(comparer.Equals(tenant, tenant1));
         }
 
-        /// <summary>Esse metodo verifica se um tenant secret e um tenant claims com mesmo ID são iguais pela logica do TenantEqualityComparer </summary>
+        /// <summary>
+        /// Esse metodo verifica se um tenant secret e um tenant claims com mesmo ID são iguais pela
+        /// logica do TenantEqualityComparer
+        /// </summary>
         [TestMethod]
         public void CheckIfTenantSecretAndTenantClaimsAreEquals_ExpectedTenantEqualityComparerResultTrue()
         {

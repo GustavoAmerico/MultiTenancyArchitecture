@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MultiTenancy.Defaults
+namespace MultiTenancy.Generic.Defaults
 {
     public class TenantSecret<TKey, TSecret> : ITenantSecrets<TKey, TSecret>
         where TSecret : new()
     {
         /// <summary>Gets the public identifier from this tenant</summary>
         public TKey Id { get; protected set; }
+
+        object ITenantItem.Id => Id;
 
         /// <summary>Gets secrets config for this thenant</summary>
         public virtual TSecret Secrets { get; set; } = new TSecret();
@@ -22,10 +24,15 @@ namespace MultiTenancy.Defaults
             Secrets = new TSecret();
         }
 
+        public bool Equals(ITenantItem other)
+        {
+            return Equals((object)other) || other?.Id.Equals(this.Id) == true;
+        }
+
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public override bool Equals(object obj)
         {
-            return Equals(obj as ITenantSecrets<TKey, TSecret>) || Equals(obj as ITenant<TKey>);
+            return Equals(obj as ITenantSecrets<TKey, TSecret>) || Equals(obj as ITenantItem<TKey>);
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -40,7 +47,7 @@ namespace MultiTenancy.Defaults
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public virtual bool Equals(ITenant<TKey> other)
+        public virtual bool Equals(ITenantItem<TKey> other)
         {
             if (ReferenceEquals(null, other) || other.Id?.Equals(Id) != true)
                 return false;

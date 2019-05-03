@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenancy", "MultiTenanc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8C04F108-9E35-4D54-B4E5-AEFB2DE4CCB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenancy.Tests", "Tests\MultiTenancy.Tests\MultiTenancy.Tests.csproj", "{C55180A6-2359-410C-B9C3-54B77FA15149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenancy.Tests", "Tests\MultiTenancy.Tests\MultiTenancy.Tests.csproj", "{C55180A6-2359-410C-B9C3-54B77FA15149}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenancy.Hosting.Abstractions", "MultiTenancy.Hosting.Abstractions\MultiTenancy.Hosting.Abstractions.csproj", "{03D5D960-D2AE-4965-895A-9D2E32708362}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{C55180A6-2359-410C-B9C3-54B77FA15149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C55180A6-2359-410C-B9C3-54B77FA15149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C55180A6-2359-410C-B9C3-54B77FA15149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D5D960-D2AE-4965-895A-9D2E32708362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D5D960-D2AE-4965-895A-9D2E32708362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D5D960-D2AE-4965-895A-9D2E32708362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D5D960-D2AE-4965-895A-9D2E32708362}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

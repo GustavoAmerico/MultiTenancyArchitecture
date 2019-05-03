@@ -3,8 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using MultiTenancy.Collections;
+using MultiTenancy.Generic;
+using MultiTenancy.Generic.Defaults;
 using NSubstitute;
-using MultiTenancy.Defaults;
 
 namespace MultiTenancy.Tests
 {
@@ -19,7 +21,7 @@ namespace MultiTenancy.Tests
             var provider = services
                 .AddTenantCollection<int, List<string>, List<DateTime>>()
                 .BuildServiceProvider();
-            var tenants = provider.GetService<ITenantCollection<int, List<string>, List<DateTime>>>();
+            var tenants = provider.GetService<ITenantCollection>();
             tenants.Should()
                 .NotBeNull("The tenant collection not working")
                 ;
@@ -37,6 +39,7 @@ namespace MultiTenancy.Tests
             var tenant2 = new Tenant<int, List<string>, List<DateTime>>(11, "Tenant 11", new List<string> { { "Claim 02" } });
             var tenant3 = new Tenant<int, List<string>, List<DateTime>>(12, "Tenant 12", new List<string> { { "Claim 03" } });
 
+            /*
             var itens = new HashSet<ITenant<int, List<string>, List<DateTime>>> { tenant1, tenant2, tenant3 };
             su.GetTenants<int, List<string>, List<DateTime>>().Returns(itens);
 
@@ -45,14 +48,14 @@ namespace MultiTenancy.Tests
               .AddSingleton<Providers.ITenantProvider>(su)
               .BuildServiceProvider();
 
-            var tenants = provider.GetService<ITenantCollection<int, List<string>, List<DateTime>>>();
+            var tenants = provider.GetService<ITenantCollection>();
 
             tenants.Should()
                 .NotBeNull("The tenant collection not working")
                 .And.NotContainNulls()
                 .And.Contain(tenant1)
                 .And.HaveCount(3)
-            ;
+            ;*/
         }
 
         /// <summary>
@@ -69,6 +72,7 @@ namespace MultiTenancy.Tests
             var tenant2 = new Tenant<int, List<string>, List<DateTime>>(11, "Tenant 11", new List<string> { { "Claim 02" } });
             var tenant3 = new Tenant<int, List<string>, List<DateTime>>(12, "Tenant 12", new List<string> { { "Claim 03" } });
 
+            /*
             tenantProvider.GetTenants<int, List<string>, List<DateTime>>()
                 .Returns(new HashSet<ITenant<int, List<string>, List<DateTime>>> { tenant1, tenant2, tenant3 });
 
@@ -84,7 +88,7 @@ namespace MultiTenancy.Tests
               //.AddSingleton<Providers.ITenantSecretProvider>(tenantSecretProvider)
               .BuildServiceProvider();
 
-            var tenants = provider.GetService<ITenantCollection<int, List<string>, List<DateTime>>>();
+            var tenants = provider.GetService<ITenantCollection>();
 
             tenants.Should()
                 .NotBeNull("The tenant collection not working")
@@ -98,6 +102,7 @@ namespace MultiTenancy.Tests
                 .Secrets.Should()
                 .NotBeNull()
                 .And.HaveCount(1);
+                */
         }
     }
 }

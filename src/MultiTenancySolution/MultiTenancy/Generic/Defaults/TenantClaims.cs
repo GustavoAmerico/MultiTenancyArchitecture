@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MultiTenancy.Defaults
+namespace MultiTenancy.Generic.Defaults
 {
     public class TenantClaims<TKey, TProperty> : ITenantClaims<TKey, TProperty>
     {
@@ -8,6 +8,8 @@ namespace MultiTenancy.Defaults
         public virtual TProperty Claims { get; set; }
 
         public TKey Id { get; protected set; }
+
+        object ITenantItem.Id => Id;
 
         public TenantClaims(TKey id, TProperty claims)
         {
@@ -22,7 +24,7 @@ namespace MultiTenancy.Defaults
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public override bool Equals(object obj)
         {
-            return Equals(obj as ITenantClaims<TKey, TProperty>) || Equals(obj as ITenant<TKey>);
+            return Equals(obj as ITenantClaims<TKey, TProperty>) || Equals(obj as ITenantItem<TKey>);
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -37,13 +39,22 @@ namespace MultiTenancy.Defaults
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public virtual bool Equals(ITenant<TKey> other)
+        public virtual bool Equals(ITenantItem<TKey> other)
         {
             if (other?.Id?.Equals(Id) != true)
                 return false;
 
             var areEqualsType = other is ITenantClaims<TKey, TProperty>;
             return areEqualsType;
+        }
+
+        public bool Equals(ITenantItem other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(other, this)) return true;
+            if (other is ITenantItem<TKey> key)
+                return Equals(key);
+            return other.Id.Equals(Id);
         }
 
         /// <summary>Return the has for this object</summary>

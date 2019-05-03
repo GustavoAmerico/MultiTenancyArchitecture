@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MultiTenancy.Defaults;
+using MultiTenancy.Generic;
+using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Tests
 {
@@ -19,7 +20,7 @@ namespace MultiTenancy.Tests
         public void CheckIfTwoBaseTenantsSomeIdAreEquals_TheOtherTenantIsAbstractType()
         {
             var tenant1 = new Tenant<int, string, string>(19, "Tenant 01", "Claims", "Secrets");
-            ITenant<int> tenant2 = new Tenant<int, string, string>(19, "Tenant 02", "Claims", "Secrets");
+            ITenantItem<int> tenant2 = new Tenant<int, string, string>(19, "Tenant 02", "Claims", "Secrets");
             Assert.IsTrue(tenant1.Equals(tenant2), "Dois tenant com o mesmo ID não estão aparecendo iguais");
         }
     }

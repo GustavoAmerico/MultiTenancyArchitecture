@@ -1,7 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MultiTenancy.Defaults;
 using System;
 using System.Collections.Generic;
+using MultiTenancy.Generic;
+using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Tests
 {
