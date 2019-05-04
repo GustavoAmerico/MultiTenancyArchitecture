@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MultiTenancy.Generic;
-using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Tests
 {
@@ -20,7 +19,7 @@ namespace MultiTenancy.Tests
         [TestMethod]
         public void AreEquals()
         {
-            var tenant1 = new TenantDefault<int>(1, "Tenant 1");
+            var tenant1 = new Tenant<int>(1, "Tenant 1");
             var tenant2 = new Tenant<int, string, DateTime>(1, "Tenant 2") { Secrets = DateTime.Now, Claims = "Claims 01" };
             var tenant3 = new Tenant<int, DateTime, string>(1, "Tenant 3") { Claims = DateTime.Now, Secrets = "Secrets 01" };
 
@@ -39,43 +38,6 @@ namespace MultiTenancy.Tests
             var tenantSecret1 = new TenantClaims<int, DateTime>(defaultId, DateTime.Today);
             var tenantSecret3 = new TenantClaims<int, int>(defaultId, 100);
             Assert.IsFalse(tenantSecret1.Equals(tenantSecret3), "O secret de outro tipo não deve ser considerado iguais mesmo que tenha o mesmo id");
-        }
-
-        /// <summary>
-        /// Esse metodo verifica se um tenant secret e um tenant claims com mesmo ID são iguais pela
-        /// logica do TenantEqualityComparer
-        /// </summary>
-        [TestMethod]
-        public void CheckIfTenantSecretAndTenantClaimsAreEquals()
-        {
-            var comparer = new TenantEqualityComparer<Guid>();
-            var tenant = new TenantDefault(_secretFirstTenant);
-            var tenant1 = new TenantDefault(_claimsFirstTenant);
-
-            Assert.IsTrue(comparer.Equals(tenant, tenant1));
-        }
-
-        /// <summary>
-        /// Esse metodo verifica se um tenant secret e um tenant claims com mesmo ID são iguais pela
-        /// logica do TenantEqualityComparer
-        /// </summary>
-        [TestMethod]
-        public void CheckIfTenantSecretAndTenantClaimsAreEquals_ExpectedTenantEqualityComparerResultTrue()
-        {
-            var comparer = new TenantEqualityComparer<Guid, Dictionary<string, object>, Dictionary<string, object>>();
-            var tenant = new TenantDefault(_secretFirstTenant);
-            var tenant1 = new TenantDefault(_claimsFirstTenant);
-
-            Assert.IsTrue(comparer.Equals(tenant, tenant1));
-        }
-
-        [TestMethod]
-        public void CheckIfTenantSecretAndTenantClaimsAreNotEquals_ExpectedTenantEqualityComparerResultTrue()
-        {
-            var comparer = new TenantEqualityComparer<Guid, Dictionary<string, object>, Dictionary<string, object>>();
-            var tenant = new TenantDefault(_secretFirstTenant);
-
-            Assert.IsFalse(comparer.Equals(tenant, _secretSecondTenant));
         }
 
         [TestMethod]

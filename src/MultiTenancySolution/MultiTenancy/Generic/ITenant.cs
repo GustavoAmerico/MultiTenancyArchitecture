@@ -12,5 +12,6 @@ namespace MultiTenancy.Generic
         , IEquatable<ITenant<TKey, TProperty, TSecret>>
         , ITenant
     {
+        new TKey Id { get; }
     }
 }

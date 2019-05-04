@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 using MultiTenancy.Collections;
 using MultiTenancy.Generic;
-using MultiTenancy.Generic.Defaults;
 using NSubstitute;
 
 namespace MultiTenancy.Tests

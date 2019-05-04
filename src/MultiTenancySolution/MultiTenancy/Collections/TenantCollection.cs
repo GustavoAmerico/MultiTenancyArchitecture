@@ -1,5 +1,4 @@
 ﻿using MultiTenancy.Generic;
-using MultiTenancy.Generic.Defaults;
 using MultiTenancy.Providers;
 using System.Collections.Generic;
 using System.Linq;

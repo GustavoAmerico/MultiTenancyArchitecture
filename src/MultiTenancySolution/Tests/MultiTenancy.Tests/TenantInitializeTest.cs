@@ -1,8 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MultiTenancy.Generic;
 using System;
 using System.Collections.Generic;
-using MultiTenancy.Generic;
-using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Tests
 {
@@ -14,7 +13,7 @@ namespace MultiTenancy.Tests
         [TestMethod]
         public void InitializeTenantDefault()
         {
-            var tenant = new TenantDefault();
+            var tenant = new Tenant<Guid, Dictionary<string, object>, Dictionary<string, object>>();
             Assert.AreEqual(tenant.Id, Guid.Empty, "O identificador padrão do tenant não corresponde ao valor padrão");
 
             Assert.AreEqual(tenant.Name, string.Empty, "O nome padrão do tenant não corresponde uma string vazia");
@@ -31,7 +30,7 @@ namespace MultiTenancy.Tests
         {
             const string tenantName = " Tenant 01 ";
             Guid id = Guid.NewGuid();
-            var tenant = new TenantDefault(id, tenantName);
+            var tenant = new Tenant<Guid, Dictionary<string, object>, Dictionary<string, object>>(id, tenantName);
             Assert.AreEqual(tenantName.Trim(), tenant.Name, "The object name can't start or finished with space");
             Assert.IsTrue(tenant.IsEnabled, "por padrão, um tenant deve iniciar ativo");
             Assert.IsNull(tenant.Secrets, "Não foi definido um secrets para esse tenant");
@@ -43,7 +42,7 @@ namespace MultiTenancy.Tests
         {
             var claims = new Dictionary<string, object>() { { "Claims 01", "Value 01" } };
             var secrets = new Dictionary<string, object>() { { "secrets 01", "Value 01" } };
-            var tenannt = new TenantDefault(Guid.NewGuid(), "New Tenant 01", claims, secrets);
+            var tenannt = new Tenant<Guid, Dictionary<string, object>, Dictionary<string, object>>(Guid.NewGuid(), "New Tenant 01", claims, secrets);
             Assert.AreEqual(claims, tenannt.Claims);
             Assert.AreEqual(secrets, tenannt.Secrets);
         }

@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MultiTenancy.Generic.Defaults
+namespace MultiTenancy.Generic
 {
     /// <summary>This class represents a system tenant instance</summary>
-    public class Tenant<TKey, TProperty, TSecret> : Tenant<TKey>, ITenant<TKey, TProperty, TSecret>
+    public class Tenant<TKey, TProperty, TSecret> : TenantItem<TKey>, ITenant<TKey, TProperty, TSecret>
 
     {
         private string _name = "";
 
         /// <summary>Gets the list of configuration for this tenant</summary>
         public virtual TProperty Claims { get; set; }
+
+        public bool IsEnabled { get; protected set; }
+
+        public string Name { get => _name; protected set => _name = (value ?? string.Empty).Trim(); }
 
         /// <summary>Gets secrets config for this thenant</summary>
         public virtual TSecret Secrets { get; set; }
@@ -27,8 +31,11 @@ namespace MultiTenancy.Generic.Defaults
             Merge(tenant);
         }
 
-        public Tenant(TKey id, string name, bool isEnabled = true) : base(id, name, isEnabled)
+        public Tenant(TKey id, string name, bool isEnabled = true)
         {
+            Id = id;
+            Name = name;
+            IsEnabled = isEnabled;
         }
 
         public Tenant(TKey id, string name, TProperty claims) : this(id, name)
@@ -57,30 +64,6 @@ namespace MultiTenancy.Generic.Defaults
         public virtual bool Equals(ITenant<TKey, TProperty, TSecret> other)
         {
             return !ReferenceEquals(null, other) && other.Id?.Equals(Id) == true;
-        }
-
-        /// <summary>Indicates whether the current object is equal to another object.</summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public override bool Equals(object obj) => Equals(obj as ITenantItem<TKey>);
-
-        /// <summary>Indicates whether the current object is equal to another object.</summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public virtual bool Equals(ITenantItem<TKey> other)
-        {
-            if (ReferenceEquals(null, other) || other.Id?.Equals(Id) != true)
-                return false;
-
-            if (other is ITenant<TKey, TProperty, TSecret> || other is ITenantClaims<TKey, TProperty> || other is ITenantSecrets<TKey, TSecret>)
-                return true;
-
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
         }
 
         /// <summary>Gets the text description</summary>

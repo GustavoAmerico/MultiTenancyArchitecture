@@ -1,60 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Generic
 {
-    /// <summary>This class represents a system tenant instance</summary>
-    public class TenantDefault<TKey> : Tenant<TKey, Dictionary<string, object>, Dictionary<string, object>>
+    public class TenantDefault : Tenant<System.Guid>
     {
-        public TenantDefault() : base()
+        public TenantDefault(Guid id, string name) : base(id, name)
         {
         }
 
-        public TenantDefault(TKey id, string name, bool isEnabled = true) : base(id, name, isEnabled)
-        {
-        }
-
-        public TenantDefault(ITenantItem<TKey> tenant) : base(tenant)
-        {
-        }
-
-        public TenantDefault(TKey id, string name, Dictionary<string, object> claims, Dictionary<string, object> secret) : base(id, name, claims, secret)
-        {
-        }
-
-        /// <summary>Indicates whether the current object is equal to another object.</summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(obj, null)) return false;
-            return base.Equals(obj as ITenantItem<Guid>);
-        }
-
-        public override int GetHashCode() => Id.GetHashCode();
-
-        /// <summary>Gets the text description</summary>
-        [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Name} ({Id})";
-    }
-
-    public class TenantDefault : TenantDefault<Guid>, ITenant
-    {
-        public TenantDefault() : base()
-        {
-        }
-
-        public TenantDefault(Guid id, string name, bool isEnabled = true) : base(id, name, isEnabled)
-        {
-        }
-
-        public TenantDefault(ITenantItem<Guid> tenant) : base(tenant)
-        {
-        }
-
-        public TenantDefault(Guid id, string name, Dictionary<string, object> claims, Dictionary<string, object> secret) : base(id, name, claims, secret)
+        public TenantDefault()
         {
         }
     }

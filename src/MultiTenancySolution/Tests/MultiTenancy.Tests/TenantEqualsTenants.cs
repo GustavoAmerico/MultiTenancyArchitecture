@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MultiTenancy.Generic;
-using MultiTenancy.Generic.Defaults;
 
 namespace MultiTenancy.Tests
 {

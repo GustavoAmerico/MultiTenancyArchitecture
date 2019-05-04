@@ -1,4 +1,4 @@
-﻿namespace MultiTenancy.Generic.Defaults
+﻿namespace MultiTenancy.Generic
 {
     public class Tenant<TKey> : ITenantItem<TKey>, ITenant
     {

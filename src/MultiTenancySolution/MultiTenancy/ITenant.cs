@@ -3,7 +3,7 @@
 namespace MultiTenancy
 {
     /// <summary>This class represents a tenant abstraction of the system</summary>
-    public interface ITenant : ITenantItem //: ITenant<Guid, Dictionary<string, object>, Dictionary<string, object>>
+    public interface ITenant : ITenantItem
     {
         /// <summary>obtains a flag indicating whether the tenant is active or not</summary>
         bool IsEnabled { get; }
