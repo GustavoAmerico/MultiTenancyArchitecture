@@ -2,6 +2,7 @@
 using MultiTenancy.Providers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace MultiTenancy.Collections
 {
@@ -33,6 +34,12 @@ namespace MultiTenancy.Collections
 
             foreach (var item in tenants)
                 AddIfNotExists(item);
+        }
+
+        public new bool Add(ITenantItem item)
+        {
+            if (ReferenceEquals(item, null)) return false;
+            return AddIfNotExists(item);
         }
 
         public void Add<TKey, TClaims, TSecret>(IEnumerable<ITenant<TKey, TClaims, TSecret>> tenantClaims)
@@ -136,11 +143,10 @@ namespace MultiTenancy.Collections
                 tenant = newTenantSecret;
                 base.Add(details);
             }
-            //else
-            //{
-            //    var tenant1 = new Tenant<TKey, TClaims, TSecret>(newTenantSecret);
-            //    base.Add(tenant1);
-            //}
+            else
+            {
+                base.Add(newTenantSecret);
+            }
         }
 
         private bool AddIfNotExists<TKey, TClaims, TSecret>(ITenantItem<TKey> newTenantSecret)
@@ -166,8 +172,22 @@ namespace MultiTenancy.Collections
 
         private void Merge<TKey, TClaims>(ITenantItem<TKey> tenant, ITenantClaims<TKey, TClaims> tenantClaims)
         {
-            if (tenant is ITenantClaims<TKey, TClaims> currentTenantClaims && !ReferenceEquals(null, tenantClaims))
+            if (ReferenceEquals(null, tenantClaims) || ReferenceEquals(null, tenantClaims.Claims)) return;
+
+            if (tenant is ITenantClaims<TKey, TClaims> currentTenantClaims)
+            {
                 currentTenantClaims.Claims = tenantClaims.Claims;
+            }
+            else
+            {
+                var newTenant = new Tenant<TKey, TClaims, object>(tenantClaims);
+                newTenant.Clone(tenant);
+                //Remove o tenant basico
+                base.Remove(tenant);
+
+                // Adiciona o tenant especifico, com a claim
+                base.Add(newTenant);
+            }
         }
 
         private void Merge<TKey, TSecrets>(ITenantItem<TKey> tenant, ITenantSecrets<TKey, TSecrets> newTenantSecret)

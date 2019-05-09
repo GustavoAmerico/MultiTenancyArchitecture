@@ -80,10 +80,14 @@ namespace MultiTenancy.Tests
 
             tenant.Add(new[] { _claimsFirstTenant });
 
-            var tenantk = tenant.FirstOrDefault<Guid, Dictionary<string, object>, int>(_firstTenantId);
+            var tenantk = tenant.FirstOrDefault(_firstTenantId);
             Assert.IsNotNull(tenantk);
             Assert.AreEqual(tenant.Count, 1);
-            Assert.IsTrue(tenantk.Claims.ContainsKey("Claims1"));
+
+            if (tenantk is ITenantClaims<Guid, Dictionary<string, object>> tClaims)
+                Assert.IsTrue(tClaims.Claims.ContainsKey("Claims1"));
+            else
+                Assert.Fail();
         }
 
         /// <summary>

@@ -8,7 +8,9 @@ namespace MultiTenancy
     {
         /// <summary>determines whether two objects are equal.</summary>
         /// <returns>returns true if two are equals</returns>
-        public override bool Equals(ITenantItem x, ITenantItem y) => !ReferenceEquals(y, null) && x?.Equals(y) == true;
+        public override bool Equals(ITenantItem x, ITenantItem y) =>
+              ReferenceEquals(y, x) ||
+            (!ReferenceEquals(y, null) && x?.Equals(y) == true);
 
         /// <summary>
         /// hash function for the specified object for hashing algorithms and data structures, such

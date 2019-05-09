@@ -22,13 +22,10 @@ namespace MultiTenancy.Generic
         /// <summary>Initialize an object with default value based on <paramref name="tenant"/></summary>
         /// <param name="tenant">The tenant base for initialize properties values</param>
         /// <exception cref="ArgumentNullException">Throw if <paramref name="tenant"/> is null.</exception>
-        public Tenant(ITenantItem<TKey> tenant)
+        public Tenant(ITenantItem<TKey> tenant) : base(tenant)
         {
             if (ReferenceEquals(null, tenant) || ReferenceEquals(null, tenant.Id))
                 throw new ArgumentNullException(nameof(tenant), "The tenant key must be fill");
-
-            Id = tenant.Id;
-            Merge(tenant);
         }
 
         public Tenant(TKey id, string name, bool isEnabled = true)
@@ -58,6 +55,22 @@ namespace MultiTenancy.Generic
         {
         }
 
+        public override void Clone(ITenantItem<TKey> tenant)
+        {
+            base.Clone(tenant);
+            if (tenant is ITenant t)
+            {
+                Name = t.Name;
+                IsEnabled = t.IsEnabled;
+            }
+
+            if (tenant is ITenantClaims<TKey, TProperty> property)
+                Claims = property.Claims;
+
+            if (tenant is ITenantSecrets<TKey, TSecret> secret)
+                Secrets = secret.Secrets;
+        }
+
         /// <summary>Indicates whether the current object is equal to another object.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
@@ -71,25 +84,6 @@ namespace MultiTenancy.Generic
         public override string ToString()
         {
             return $"{Name} ({Id})";
-        }
-
-        protected virtual void Merge(ITenantItem<TKey> tenant)
-        {
-            if (tenant is ITenant<TKey, TProperty, TSecret> full)
-            {
-                Name = full.Name;
-                Secrets = full.Secrets;
-                IsEnabled = full.IsEnabled;
-                Claims = full.Claims;
-            }
-            else
-            {
-                if (tenant is ITenantClaims<TKey, TProperty> property)
-                    Claims = property.Claims;
-
-                if (tenant is ITenantSecrets<TKey, TSecret> secret)
-                    Secrets = secret.Secrets;
-            }
         }
     }
 }
