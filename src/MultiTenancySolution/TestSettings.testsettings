@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings name="TestSettings" id="266fd31f-a68c-4b4e-a0f8-2c6c044cb09d" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>These are default test settings for a local test run.</Description>
+  <Deployment enabled="false" />
+  <NamingScheme baseName="MultiTenancy" useDefault="false" />
+  <Execution hostProcessPlatform="MSIL">
+    <TestTypeSpecific>
+      <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
+        <AssemblyResolution>
+          <TestDirectory useLoadContext="true" />
+        </AssemblyResolution>
+      </UnitTestRunConfig>
+    </TestTypeSpecific>
+    <AgentRule name="LocalMachineDefaultRole">
+      <DataCollectors>
+        <DataCollector uri="datacollector://microsoft/HttpProxy/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TraceCollector.HttpProxyCollector, Microsoft.VisualStudio.TraceCollector, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="ASP.NET Client Proxy for IntelliTrace and Test Impact">
+        </DataCollector>
+        <DataCollector uri="datacollector://microsoft/AspNetProfiler/1.0" assemblyQualifiedName="Microsoft.VisualStudio.PerformanceTools.DataCollection.AspNetProfileDataCollector, Microsoft.VisualStudio.PerformanceTools.DataCollection, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="ASP.NET Profiler">
+        </DataCollector>
+        <DataCollector uri="datacollector://microsoft/TraceDebugger/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TraceCollector.TraceDebuggerDataCollector, Microsoft.VisualStudio.TraceCollector, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="IntelliTrace">
+        </DataCollector>
+        <DataCollector uri="datacollector://microsoft/TestImpact/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TraceCollector.TestImpactDataCollector, Microsoft.VisualStudio.TraceCollector, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="Test Impact">
+          <Configuration>
+            <WorkerProcessList xmlns="">
+              <WorkerProcess>w3wp.exe</WorkerProcess>
+            </WorkerProcessList>
+            <MaximumConcurrentTests xmlns="">32</MaximumConcurrentTests>
+            <InstrumentIIS xmlns="">True</InstrumentIIS>
+            <RemoteInstrumentIIS xmlns="">False</RemoteInstrumentIIS>
+            <ProcessList IsExclusionList="True" xmlns="">
+              <Process>devenv.exe</Process>
+              <Process>mtm.exe</Process>
+              <Process>TestAgentConfigUI.exe</Process>
+              <Process>TestControllerConfigUI.exe</Process>
+              <Process>DW20.exe</Process>
+              <Process>TFSMgmt.exe</Process>
+              <Process>TFSJobAgent.exe</Process>
+              <Process>TFSBuildServiceHost.exe</Process>
+              <Process>Microsoft.VisualStudio.PerfWatson.exe</Process>
+              <Process>FxCopCmd.exe</Process>
+              <Process>MSBuild.exe</Process>
+              <Process>sqlservr.exe</Process>
+              <Process>IntelliTrace.exe</Process>
+              <Process>MSVSMON.exe</Process>
+              <Process>IntelliTraceSC.exe</Process>
+              <Process>xdesproc.exe</Process>
+              <Process>VWDExpress.exe</Process>
+              <Process>VsWinExpress.exe</Process>
+              <Process>Blend.exe</Process>
+              <Process>CodedUITestSwitchFromImmersive.exe</Process>
+            </ProcessList>
+            <ModuleList IsExclusionList="True" xmlns="">
+              <Module>PublicKeyToken:B77A5C561934E089</Module>
+              <Module>PublicKeyToken:B03F5F7F11D50A3A</Module>
+              <Module>PublicKeyToken:31BF3856AD364E35</Module>
+              <Module>PublicKeyToken:89845DCD8080CC91</Module>
+              <Module>PublicKeyToken:71E9BCE111E9429C</Module>
+              <Module>Microsoft.</Module>
+            </ModuleList>
+          </Configuration>
+        </DataCollector>
+      </DataCollectors>
+    </AgentRule>
+  </Execution>
+  <Properties />
+</TestSettings>

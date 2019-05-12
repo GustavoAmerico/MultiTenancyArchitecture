@@ -1,8 +1,8 @@
 ﻿using MultiTenancy.Generic;
 using MultiTenancy.Providers;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace MultiTenancy.Collections
 {
@@ -108,9 +108,58 @@ namespace MultiTenancy.Collections
             return this.OfType<ITenant>().GetEnumerator();
         }
 
+        public virtual IEnumerator<ITenantItem<TKey>> GetEnumerator<TKey>() => this.OfType<ITenantItem<TKey>>().GetEnumerator();
+
+        /// <summary>
+        /// Retorna um enumerator capaz de percorrer a lista de configurações associadas ao tenant
+        /// </summary>
+        /// <typeparam name="TKey">Representa o tipo da chave que identifica o tenant</typeparam>
+        /// <typeparam name="TClaims">Representa o tipo da configuração utilizada pelo tenant</typeparam>
+        public virtual IEnumerator<ITenantClaims<TKey, TClaims>> GetEnumeratorClaims<TKey, TClaims>()
+        {
+            return this.OfType<ITenantClaims<TKey, TClaims>>().GetEnumerator();
+        }
+
+        /// <summary>
+        /// Retorna um enumerator capaz de percorrer a lista de segredos associados ao tenant
+        /// </summary>
+        /// <typeparam name="TKey">Representa o tipo da chave que identifica o tenant</typeparam>
+        /// <typeparam name="TSecrets">Representa o tipo da configuração utilizada pelo tenant</typeparam>
+        public virtual IEnumerator<ITenantSecrets<TKey, TSecrets>> GetEnumeratorSecrets<TKey, TSecrets>()
+        {
+            return this.OfType<ITenantSecrets<TKey, TSecrets>>().GetEnumerator();
+        }
+
+        /// <summary>Retorna um texto representando o total de tenants configurados</summary>
         public override string ToString()
         {
             return $"{Count} tenants configured";
+        }
+
+        protected virtual void Merge<TKey, TClaims>(ITenantItem<TKey> tenant, ITenantClaims<TKey, TClaims> tenantClaims)
+        {
+            if (ReferenceEquals(null, tenantClaims) || ReferenceEquals(null, tenantClaims.Claims)) return;
+
+            if (tenant is ITenantClaims<TKey, TClaims> currentTenantClaims)
+            {
+                currentTenantClaims.Claims = tenantClaims.Claims;
+            }
+            else
+            {
+                var newTenant = new Tenant<TKey, TClaims, object>(tenantClaims);
+                newTenant.Clone(tenant);
+                //Remove o tenant basico
+                base.Remove(tenant);
+
+                // Adiciona o tenant especifico, com a claim
+                base.Add(newTenant);
+            }
+        }
+
+        protected virtual void Merge<TKey, TSecrets>(ITenantItem<TKey> tenant, ITenantSecrets<TKey, TSecrets> newTenantSecret)
+        {
+            if (tenant is ITenantSecrets<TKey, TSecrets> current && !ReferenceEquals(null, newTenantSecret))
+                current.Secrets = newTenantSecret.Secrets;
         }
 
         private bool AddIfNotExists(ITenantItem newTenantSecret)
@@ -168,32 +217,6 @@ namespace MultiTenancy.Collections
             Merge(tenant, newTenantSecret as ITenantSecrets<TKey, TSecret>);
 
             return false;
-        }
-
-        private void Merge<TKey, TClaims>(ITenantItem<TKey> tenant, ITenantClaims<TKey, TClaims> tenantClaims)
-        {
-            if (ReferenceEquals(null, tenantClaims) || ReferenceEquals(null, tenantClaims.Claims)) return;
-
-            if (tenant is ITenantClaims<TKey, TClaims> currentTenantClaims)
-            {
-                currentTenantClaims.Claims = tenantClaims.Claims;
-            }
-            else
-            {
-                var newTenant = new Tenant<TKey, TClaims, object>(tenantClaims);
-                newTenant.Clone(tenant);
-                //Remove o tenant basico
-                base.Remove(tenant);
-
-                // Adiciona o tenant especifico, com a claim
-                base.Add(newTenant);
-            }
-        }
-
-        private void Merge<TKey, TSecrets>(ITenantItem<TKey> tenant, ITenantSecrets<TKey, TSecrets> newTenantSecret)
-        {
-            if (tenant is ITenantSecrets<TKey, TSecrets> current && !ReferenceEquals(null, newTenantSecret))
-                current.Secrets = newTenantSecret.Secrets;
         }
     }
 }

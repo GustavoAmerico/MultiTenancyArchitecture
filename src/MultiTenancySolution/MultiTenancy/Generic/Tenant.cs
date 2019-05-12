@@ -12,7 +12,7 @@ namespace MultiTenancy.Generic
         /// <summary>Gets the list of configuration for this tenant</summary>
         public virtual TProperty Claims { get; set; }
 
-        public bool IsEnabled { get; protected set; }
+        public bool IsEnabled { get; protected set; } = true;
 
         public string Name { get => _name; protected set => _name = (value ?? string.Empty).Trim(); }
 

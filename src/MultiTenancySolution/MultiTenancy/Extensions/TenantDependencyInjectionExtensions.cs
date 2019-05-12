@@ -9,15 +9,10 @@ namespace MultiTenancy
     {
         public static IServiceCollection AddTenantCollection<TKey, TClaims, TSecret>(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
-            var descriptor = new ServiceDescriptor(
-                typeof(ITenantCollection)
-                , typeof(TenantCollection)
-                , serviceLifetime);
+            var descriptor = new ServiceDescriptor(serviceType: typeof(TenantCollection), typeof(TenantCollection), (ServiceLifetime)serviceLifetime);
             services.Add(descriptor);
 
-            var desc = new ServiceDescriptor(
-                  typeof(ITenantCollection)
-                , (provider) => provider.GetService<TenantCollection>()
+            var desc = new ServiceDescriptor(typeof(ITenantCollection), (provider) => provider.GetService<TenantCollection>()
                 , serviceLifetime);
             services.Add(desc);
             return services;

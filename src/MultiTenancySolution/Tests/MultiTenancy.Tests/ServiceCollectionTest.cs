@@ -21,6 +21,9 @@ namespace MultiTenancy.Tests
                 .AddTenantCollection<int, List<string>, List<DateTime>>()
                 .BuildServiceProvider();
             var tenants = provider.GetService<ITenantCollection>();
+
+
+
             tenants.Should()
                 .NotBeNull("The tenant collection not working")
                 ;

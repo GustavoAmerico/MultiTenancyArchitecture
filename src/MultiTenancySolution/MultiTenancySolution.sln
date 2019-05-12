@@ -9,7 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8C04F108
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenancy.Tests", "Tests\MultiTenancy.Tests\MultiTenancy.Tests.csproj", "{C55180A6-2359-410C-B9C3-54B77FA15149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenancy.Hosting.Abstractions", "MultiTenancy.Hosting.Abstractions\MultiTenancy.Hosting.Abstractions.csproj", "{03D5D960-D2AE-4965-895A-9D2E32708362}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenancy.Hosting.Abstractions", "MultiTenancy.Hosting.Abstractions\MultiTenancy.Hosting.Abstractions.csproj", "{03D5D960-D2AE-4965-895A-9D2E32708362}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F95CA127-5EA7-4917-BEE5-5BA183AC9721}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		TestSettings.testsettings = TestSettings.testsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
